@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Mes Dispos Stream - HeyLynn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #C99CFD 0%, #528EF5 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .admin-badge {
+            display: inline-block;
+            background: #CDF667;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #CDF667;
+        }
+
+        .instructions h2 {
+            color: #C99CFD;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .instructions p {
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #C99CFD 0%, #528EF5 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .schedule-grid {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 2px;
+            min-width: 600px;
+        }
+
+        th {
+            background: #C99CFD;
+            color: white;
+            padding: 12px 8px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        th.time-header {
+            background: #528EF5;
+            width: 80px;
+        }
+
+        td {
+            background: #999;
+            padding: 0;
+            text-align: center;
+            position: relative;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0.5;
+        }
+
+        td:hover {
+            background: #888;
+            transform: scale(1.05);
+        }
+        
+        td.clickable {
+            background: #f8f9fa;
+            opacity: 1;
+        }
+        
+        td.clickable:hover {
+            background: #e9ecef;
+        }
+
+        td.available {
+            background: #CDF667;
+            font-weight: bold;
+        }
+
+        td.available::after {
+            content: '✓';
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        td .vote-count {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            background: #FDAFB3;
+            color: white;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .results h2 {
+            color: #C99CFD;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .time-slot {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            border-color: #C99CFD;
+            box-shadow: 0 4px 12px rgba(201, 156, 253, 0.2);
+        }
+
+        .time-slot.top-choice {
+            border-color: #CDF667;
+            background: linear-gradient(135deg, #CDF667 0%, #b8e34c 100%);
+        }
+
+        .time-slot.top-choice .slot-info h3 {
+            color: #333;
+        }
+
+        .slot-info h3 {
+            color: #528EF5;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .slot-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .vote-badge {
+            background: #FDAFB3;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        button.primary {
+            background: linear-gradient(135deg, #CDF667 0%, #b8e34c 100%);
+            color: #333;
+        }
+
+        button.secondary {
+            background: linear-gradient(135deg, #528EF5 0%, #4a7de0 100%);
+        }
+
+        button.danger {
+            background: linear-gradient(135deg, #FDAFB3 0%, #fc8f95 100%);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .link-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid #FDAFB3;
+        }
+
+        .link-section h2 {
+            color: #C99CFD;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .link-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px dashed #C99CFD;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .link-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 0.95rem;
+            color: #528EF5;
+            font-family: monospace;
+        }
+
+        .link-box button {
+            flex: 0;
+            min-width: auto;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .config-section {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .config-section h2 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .config-section textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .config-section button {
+            width: 100%;
+        }
+
+        .config-hint {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .config-hint code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #C99CFD;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header p {
+                font-size: 0.9rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            th, td {
+                font-size: 0.8rem;
+                padding: 8px 4px;
+            }
+
+            th.time-header {
+                width: 60px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .link-box {
+                flex-direction: column;
+            }
+
+            .link-box input {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #C99CFD;
+            font-size: 1.2rem;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Admin - Mes Disponibilités Stream</h1>
+            <p>Indique quand tu es disponible pour streamer</p>
+            <span class="admin-badge">👑 MODE ADMIN</span>
+        </header>
+
+        <div class="content">
+            <!-- Section de configuration Firebase -->
+            <div class="config-section" id="configSection">
+                <h2>⚙️ Configuration Firebase</h2>
+                <p style="margin-bottom: 15px;">Colle ta configuration Firebase ici (une seule fois) :</p>
+                <textarea id="firebaseConfig" placeholder='Colle ici ton objet firebaseConfig depuis la console Firebase...
+Exemple:
+{
+  "apiKey": "AIzaSy...",
+  "authDomain": "ton-projet.firebaseapp.com",
+  "databaseURL": "https://ton-projet.firebaseio.com",
+  "projectId": "ton-projet",
+  "storageBucket": "ton-projet.appspot.com",
+  "messagingSenderId": "123456789",
+  "appId": "1:123456789:web:abcdef"
+}'></textarea>
+                <button class="primary" onclick="saveFirebaseConfig()">💾 Sauvegarder la config</button>
+                
+                <div class="config-hint">
+                    <strong>📌 Comment obtenir ta config Firebase :</strong><br>
+                    1. Va sur <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a><br>
+                    2. Crée un projet ou ouvre un existant<br>
+                    3. Clique sur "⚙️" → "Paramètres du projet"<br>
+                    4. Dans "Vos applications", clique sur "Web" (<code>&lt;/&gt;</code>)<br>
+                    5. Copie l'objet <code>firebaseConfig</code> et colle-le ci-dessus<br>
+                    6. Active "Realtime Database" dans ton projet Firebase<br>
+                    7. Configure les règles en mode "test" pour commencer
+                </div>
+            </div>
+
+            <div id="mainContent" style="display: none;">
+                <div class="instructions">
+                    <h2>📋 Mode d'emploi</h2>
+                    <p><strong>1.</strong> Clique sur les cases pour marquer tes disponibilités</p>
+                    <p><strong>2.</strong> Les cases vertes = tu peux streamer à ces horaires</p>
+                    <p><strong>3.</strong> Tes dispos sont automatiquement sauvegardées</p>
+                    <p><strong>4.</strong> Partage le lien viewer à ta communauté pour qu'ils votent !</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3 id="totalSlots">0</h3>
+                        <p>Créneaux dispos</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="totalVotes">0</h3>
+                        <p>Votes totaux</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="streamSlots">0</h3>
+                        <p>Créneaux de 3h</p>
+                    </div>
+                </div>
+
+                <div class="schedule-grid">
+                    <table id="scheduleTable">
+                        <thead>
+                            <tr>
+                                <th class="time-header">Heure</th>
+                                <th>Lundi</th>
+                                <th>Mardi</th>
+                                <th>Mercredi</th>
+                                <th>Jeudi</th>
+                                <th>Vendredi</th>
+                                <th>Samedi</th>
+                                <th>Dimanche</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="results">
+                    <h2>🏆 Top 5 des créneaux de 3h les plus votés</h2>
+                    <div id="topSlots"></div>
+                </div>
+
+                <div class="actions">
+                    <button class="danger" onclick="resetEverything()">🗑️ Réinitialiser tout (dispos + votes)</button>
+                    <button class="secondary" onclick="resetConfigOnly()">⚙️ Changer config Firebase</button>
+                </div>
+
+                <div class="link-section">
+                    <h2>🔗 Lien pour tes viewers</h2>
+                    <p style="margin-bottom: 15px; color: #666;">Partage ce lien à ta communauté pour qu'ils votent sur tes dispos :</p>
+                    <div class="link-box">
+                        <input type="text" id="voterLink" readonly value="">
+                        <button class="secondary" onclick="copyLink()">📋 Copier</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Made with 💜 for HeyLynn | Mode Admin - Firebase Realtime Database
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        const days = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
+        const hours = [];
+        
+        for (let h = 8; h <= 23; h++) {
+            hours.push(`${h}h00`);
+        }
+
+        let db = null;
+        let availability = new Set();
+        let allVotes = {};
+
+        // Initialiser Firebase
+        function initFirebase() {
+            // Vérifier si config dans l'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const configParam = urlParams.get('config');
+            
+            let savedConfig = localStorage.getItem('firebaseConfig');
+            
+            // Si config dans l'URL, la sauvegarder
+            if (configParam) {
+                try {
+                    const decodedConfig = atob(configParam);
+                    const config = JSON.parse(decodedConfig);
+                    localStorage.setItem('firebaseConfig', JSON.stringify(config));
+                    savedConfig = JSON.stringify(config);
+                    // Nettoyer l'URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } catch (error) {
+                    console.error('Erreur config URL:', error);
+                }
+            }
+            
+            if (!savedConfig) {
+                document.getElementById('configSection').style.display = 'block';
+                document.getElementById('mainContent').style.display = 'none';
+                return;
+            }
+
+            try {
+                const config = JSON.parse(savedConfig);
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(config);
+                }
+                db = firebase.database();
+                
+                document.getElementById('configSection').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                
+                loadData();
+                generateViewerLink();
+            } catch (error) {
+                alert('❌ Erreur de configuration Firebase: ' + error.message);
+                document.getElementById('configSection').style.display = 'block';
+                document.getElementById('mainContent').style.display = 'none';
+            }
+        }
+
+        // Sauvegarder la config Firebase
+        function saveFirebaseConfig() {
+            const configText = document.getElementById('firebaseConfig').value.trim();
+            if (!configText) {
+                alert('⚠️ Colle ta configuration Firebase !');
+                return;
+            }
+
+            try {
+                const config = JSON.parse(configText);
+                localStorage.setItem('firebaseConfig', JSON.stringify(config));
+                alert('✅ Configuration sauvegardée ! Rechargement...');
+                location.reload();
+            } catch (error) {
+                alert('❌ Configuration invalide. Vérifie que c\'est bien du JSON valide.');
+            }
+        }
+
+        // Charger les données depuis Firebase
+        function loadData() {
+            // Charger les disponibilités
+            db.ref('streamer/availability').on('value', (snapshot) => {
+                const data = snapshot.val();
+                availability = data ? new Set(data) : new Set();
+                generateGrid();
+                updateStats();
+            });
+
+            // Charger les votes
+            db.ref('votes').on('value', (snapshot) => {
+                allVotes = snapshot.val() || {};
+                updateVoteBadges();
+                updateResults();
+                updateStats();
+            });
+        }
+
+        // Générer la grille
+        function generateGrid() {
+            const tbody = document.getElementById('scheduleBody');
+            tbody.innerHTML = '';
+
+            hours.forEach(hour => {
+                const tr = document.createElement('tr');
+                
+                const thHour = document.createElement('th');
+                thHour.className = 'time-header';
+                thHour.textContent = hour;
+                tr.appendChild(thHour);
+
+                days.forEach(day => {
+                    const td = document.createElement('td');
+                    const slotId = `${day}-${hour}`;
+                    td.dataset.slot = slotId;
+                    td.classList.add('clickable');
+                    
+                    if (availability.has(slotId)) {
+                        td.classList.add('available');
+                    }
+
+                    const voteCount = allVotes[slotId] || 0;
+                    if (voteCount > 0) {
+                        const badge = document.createElement('span');
+                        badge.className = 'vote-count';
+                        badge.textContent = voteCount;
+                        td.appendChild(badge);
+                    }
+
+                    td.addEventListener('click', () => toggleSlot(slotId));
+                    tr.appendChild(td);
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Toggle un créneau
+        function toggleSlot(slotId) {
+            if (availability.has(slotId)) {
+                availability.delete(slotId);
+            } else {
+                availability.add(slotId);
+            }
+
+            // Sauvegarder dans Firebase
+            db.ref('streamer/availability').set([...availability]);
+        }
+
+        // Mettre à jour les badges de votes
+        function updateVoteBadges() {
+            document.querySelectorAll('td[data-slot]').forEach(td => {
+                const slotId = td.dataset.slot;
+                const existingBadge = td.querySelector('.vote-count');
+                const voteCount = allVotes[slotId] || 0;
+
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+
+                if (voteCount > 0) {
+                    const badge = document.createElement('span');
+                    badge.className = 'vote-count';
+                    badge.textContent = voteCount;
+                    td.appendChild(badge);
+                }
+            });
+        }
+
+        // Calculer les créneaux de 3h
+        function calculate3HourSlots() {
+            const slots = [];
+
+            hours.forEach((startHour, idx) => {
+                if (idx + 2 >= hours.length) return;
+
+                days.forEach(day => {
+                    let allAvailable = true;
+                    for (let i = 0; i < 3; i++) {
+                        const slotId = `${day}-${hours[idx + i]}`;
+                        if (!availability.has(slotId)) {
+                            allAvailable = false;
+                            break;
+                        }
+                    }
+
+                    if (!allAvailable) return;
+
+                    let totalVotes = 0;
+                    const slotIds = [];
+
+                    for (let i = 0; i < 3; i++) {
+                        const slotId = `${day}-${hours[idx + i]}`;
+                        slotIds.push(slotId);
+                        totalVotes += allVotes[slotId] || 0;
+                    }
+
+                    slots.push({
+                        day: day.charAt(0).toUpperCase() + day.slice(1),
+                        startTime: startHour,
+                        endTime: hours[idx + 2].replace('h00', 'h59'),
+                        votes: totalVotes,
+                        slotIds: slotIds
+                    });
+                });
+            });
+
+            slots.sort((a, b) => b.votes - a.votes);
+            return slots.slice(0, 5);
+        }
+
+        // Afficher les résultats
+        function updateResults() {
+            const topSlots = calculate3HourSlots();
+            const container = document.getElementById('topSlots');
+            container.innerHTML = '';
+
+            if (topSlots.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Marque tes disponibilités pour voir les créneaux possibles !</p>';
+                return;
+            }
+
+            topSlots.forEach((slot, index) => {
+                const div = document.createElement('div');
+                div.className = 'time-slot' + (index === 0 && slot.votes > 0 ? ' top-choice' : '');
+                div.innerHTML = `
+                    <div class="slot-info">
+                        <h3>${index === 0 ? '🥇 ' : index === 1 ? '🥈 ' : index === 2 ? '🥉 ' : ''}${slot.day} ${slot.startTime} - ${slot.endTime}</h3>
+                        <p>Créneau de 3 heures</p>
+                    </div>
+                    <div class="vote-badge">${slot.votes} vote${slot.votes > 1 ? 's' : ''}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Mettre à jour les stats
+        function updateStats() {
+            const totalSlots = availability.size;
+            const streamSlots = calculate3HourSlots().length;
+            const totalVotes = Object.values(allVotes).reduce((sum, count) => sum + count, 0);
+
+            document.getElementById('totalSlots').textContent = totalSlots;
+            document.getElementById('streamSlots').textContent = streamSlots;
+            document.getElementById('totalVotes').textContent = totalVotes;
+        }
+
+        // Réinitialiser tout
+        function resetEverything() {
+            if (confirm('⚠️ Es-tu sûre de vouloir TOUT effacer (disponibilités + votes) ?')) {
+                db.ref('streamer/availability').remove();
+                db.ref('votes').remove();
+                availability.clear();
+                allVotes = {};
+                generateGrid();
+                updateResults();
+                updateStats();
+                alert('✅ Tout a été réinitialisé !');
+            }
+        }
+
+        // Réinitialiser seulement la config
+        function resetConfigOnly() {
+            if (confirm('⚠️ Veux-tu changer la configuration Firebase ? (Les données resteront intactes)')) {
+                localStorage.removeItem('firebaseConfig');
+                location.reload();
+            }
+        }
+
+        // Copier le lien
+        function copyLink() {
+            const input = document.getElementById('voterLink');
+            input.select();
+            document.execCommand('copy');
+            alert('✅ Lien copié ! Partage-le à ta communauté 🎉');
+        }
+
+        // Générer le lien viewer
+        function generateViewerLink() {
+            const currentUrl = window.location.href.split('?')[0];
+            const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+            
+            // Encoder la config Firebase en base64 pour l'URL
+            const savedConfig = localStorage.getItem('firebaseConfig');
+            const encodedConfig = btoa(savedConfig);
+            
+            const voterLink = baseUrl + 'stream-vote-firebase.html?config=' + encodedConfig;
+            document.getElementById('voterLink').value = voterLink;
+        }
+
+        // Initialisation
+        initFirebase();
+    </script>
+</body>
+</html>
