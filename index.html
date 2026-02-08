@@ -236,12 +236,12 @@
         }
 
         td {
-            background: #E2E8F0;
+            background: #A0AEC0;
             padding: 0;
             text-align: center;
             position: relative;
             height: 48px;
-            opacity: 0.4;
+            opacity: 0.8;
             cursor: not-allowed;
             border-radius: 12px;
             transition: all 0.2s ease;
@@ -249,24 +249,24 @@
 
         /* Mode Admin */
         .admin-mode td {
-            background: #E2E8F0;
-            opacity: 0.4;
+            background: #CBD5E0;
+            opacity: 0.6;
             cursor: pointer;
         }
 
         .admin-mode td:hover {
-            opacity: 0.6;
+            opacity: 0.8;
             transform: scale(1.05);
         }
 
         .admin-mode td.clickable {
-            background: white;
+            background: var(--white);
             opacity: 1;
-            border: 2px solid var(--cream);
+            border: 2px solid var(--gray-medium);
         }
 
         .admin-mode td.clickable:hover {
-            border-color: var(--pink-soft);
+            border-color: var(--blue);
         }
 
         /* Mode Viewer */
@@ -290,10 +290,8 @@
         }
 
         td.voted::after, td.available.voted::after {
-            content: '✓';
-            color: var(--black);
+            content: '✅';
             font-size: 1.4rem;
-            font-weight: bold;
         }
 
         td .vote-count {
@@ -445,18 +443,26 @@
         }
 
         .legend-box.disabled {
-            background: #E2E8F0;
-            opacity: 0.4;
+            background: #A0AEC0;
+            opacity: 0.8;
         }
 
         .legend-box.available {
-            background: white;
-            border: 2px solid var(--mint-soft);
+            background: var(--white);
+            border: 2px solid var(--gray-medium);
         }
 
         .legend-box.voted {
-            background: linear-gradient(135deg, var(--mint-soft), var(--mint-medium));
-            border: 2px solid var(--mint-medium);
+            background: var(--lime);
+            border: 2px solid var(--lime);
+        }
+
+        .legend-box.voted::after {
+            content: '✅';
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .warning {
