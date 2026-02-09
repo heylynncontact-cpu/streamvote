@@ -983,15 +983,20 @@
         // ========================================
         
         function checkAvailability() {
-            if (!isAdminMode && streamerAvailability.size === 0) {
+            // Ne jamais cacher le calendrier en mode admin
+            if (isAdminMode) return;
+            
+            if (streamerAvailability.size === 0) {
                 const content = document.querySelector('.content');
-                content.innerHTML = `
-                    <div class="no-availability">
-                        <h2>Aucune disponibilité</h2>
-                        <p>HeyLynn n'a pas encore indiqué ses disponibilités.</p>
-                        <p>Reviens plus tard !</p>
-                    </div>
-                `;
+                if (content) {
+                    content.innerHTML = `
+                        <div class="no-availability">
+                            <h2>Aucune disponibilité</h2>
+                            <p>HeyLynn n'a pas encore indiqué ses disponibilités.</p>
+                            <p>Reviens plus tard !</p>
+                        </div>
+                    `;
+                }
             }
         }
 
