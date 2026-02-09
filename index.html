@@ -156,7 +156,7 @@
         }
 
         .no-availability p {
-            font-family: 'tchig-mono', monospace;
+            font-family: 'fractul-variable', sans-serif;
             color: var(--text-medium);
             font-size: 1.05rem;
             line-height: 1.6;
@@ -321,7 +321,7 @@
 
         .result-item {
             background: white;
-            border: 2px solid var(--cream);
+            border: 2px solid var(--gray-medium);
             border-radius: 20px;
             padding: 20px 24px;
             margin-bottom: 14px;
@@ -332,7 +332,7 @@
         }
 
         .result-item:hover {
-            border-color: var(--pink-soft);
+            border-color: var(--pink);
             transform: translateX(8px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
         }
@@ -363,13 +363,13 @@
         }
 
         .result-info p {
-            font-family: 'tchig-mono', monospace;
+            font-family: 'fractul-variable', sans-serif;
             color: var(--text-medium);
             font-size: 0.85rem;
         }
 
         .vote-badge {
-            background: var(--pink-medium);
+            background: var(--pink);
             color: white;
             padding: 12px 20px;
             border-radius: 20px;
@@ -430,7 +430,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-family: 'tchig-mono', monospace;
+            font-family: 'fractul-variable', sans-serif;
             font-size: 0.9rem;
             color: var(--text-medium);
         }
@@ -439,7 +439,7 @@
             width: 32px;
             height: 32px;
             border-radius: 10px;
-            border: 2px solid var(--cream);
+            border: 2px solid var(--gray-medium);
         }
 
         .legend-box.disabled {
@@ -466,14 +466,14 @@
         }
 
         .warning {
-            background: var(--peach);
-            border-left: 4px solid var(--pink-medium);
+            background: var(--pink);
+            border-left: 4px solid var(--pink);
             padding: 16px 20px;
             border-radius: 16px;
             margin-bottom: 24px;
-            color: var(--text-dark);
+            color: var(--black);
             display: none;
-            font-family: 'tchig-mono', monospace;
+            font-family: 'fractul-variable', sans-serif;
             font-size: 0.9rem;
         }
 
@@ -484,7 +484,7 @@
             color: var(--text-medium);
             font-size: 0.9rem;
             position: relative;
-            font-family: 'tchig-mono', monospace;
+            font-family: 'fractul-variable', sans-serif;
         }
 
         .admin-link {
@@ -493,7 +493,7 @@
             right: 20px;
             background: none;
             border: none;
-            color: var(--text-light);
+            color: var(--text-medium);
             font-size: 0.8rem;
             cursor: pointer;
             padding: 8px 12px;
@@ -504,7 +504,7 @@
 
         .admin-link:hover {
             opacity: 1;
-            color: var(--text-medium);
+            color: var(--black);
         }
 
         /* Modal */
@@ -516,7 +516,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 212, 229, 0.4);
+            background-color: rgba(255, 182, 200, 0.4);
             backdrop-filter: blur(8px);
             animation: fadeIn 0.3s ease;
         }
@@ -527,7 +527,7 @@
         }
 
         .modal-content {
-            background: var(--cream);
+            background: var(--white);
             margin: 15% auto;
             padding: 40px;
             border-radius: 32px;
@@ -535,7 +535,7 @@
             max-width: 420px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             animation: slideUp 0.4s ease;
-            border: 2px solid var(--pink-soft);
+            border: 2px solid var(--pink);
         }
 
         @keyframes slideUp {
@@ -555,18 +555,18 @@
         .modal-content input {
             width: 100%;
             padding: 16px;
-            border: 2px solid var(--pink-soft);
+            border: 2px solid var(--gray-medium);
             border-radius: 16px;
             font-size: 1rem;
             margin-bottom: 20px;
-            font-family: 'tchig-mono', monospace;
+            font-family: 'fractul-variable', sans-serif;
             background: white;
             color: var(--text-dark);
         }
 
         .modal-content input:focus {
             outline: none;
-            border-color: var(--pink-medium);
+            border-color: var(--pink);
         }
 
         .modal-content button {
@@ -575,14 +575,14 @@
         }
 
         .error-msg {
-            color: var(--text-dark);
-            background: var(--pink-soft);
+            color: var(--black);
+            background: var(--pink);
             padding: 12px;
             border-radius: 12px;
             text-align: center;
             margin-top: 12px;
             display: none;
-            font-family: 'tchig-mono', monospace;
+            font-family: 'fractul-variable', sans-serif;
             font-size: 0.9rem;
         }
 
@@ -591,7 +591,7 @@
         }
 
         .voters-list {
-            background: white;
+            background: var(--gray-light);
             padding: 24px;
             border-radius: 24px;
             margin-top: 32px;
@@ -607,7 +607,7 @@
         }
 
         .voter-item {
-            background: var(--cream);
+            background: var(--white);
             padding: 14px 18px;
             border-radius: 16px;
             margin-bottom: 10px;
@@ -624,8 +624,8 @@
         }
 
         .voter-count {
-            background: var(--mint-medium);
-            color: white;
+            background: var(--lime);
+            color: var(--black);
             padding: 6px 14px;
             border-radius: 14px;
             font-size: 0.85rem;
@@ -716,15 +716,15 @@
             <div class="stats">
                 <div class="stat-card">
                     <h3 id="stat1Value">0</h3>
-                    <p id="stat1Label">Mes votes</p>
+                    <p id="stat1Label">MES VOTES</p>
                 </div>
                 <div class="stat-card">
                     <h3 id="stat2Value">0</h3>
-                    <p id="stat2Label">Votes totaux</p>
+                    <p id="stat2Label">VOTES TOTAUX</p>
                 </div>
                 <div class="stat-card">
                     <h3 id="stat3Value">--h--</h3>
-                    <p id="stat3Label">Horaire populaire</p>
+                    <p id="stat3Label">HORAIRE POPULAIRE</p>
                 </div>
             </div>
 
@@ -732,14 +732,14 @@
                 <table id="scheduleTable">
                     <thead>
                         <tr>
-                            <th class="time-header">Heure</th>
-                            <th>Lundi</th>
-                            <th>Mardi</th>
-                            <th>Mercredi</th>
-                            <th>Jeudi</th>
-                            <th>Vendredi</th>
-                            <th>Samedi</th>
-                            <th>Dimanche</th>
+                            <th class="time-header">HEURE</th>
+                            <th>LUNDI</th>
+                            <th>MARDI</th>
+                            <th>MERCREDI</th>
+                            <th>JEUDI</th>
+                            <th>VENDREDI</th>
+                            <th>SAMEDI</th>
+                            <th>DIMANCHE</th>
                         </tr>
                     </thead>
                     <tbody id="scheduleBody"></tbody>
@@ -779,34 +779,35 @@
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <h2>Connexion Admin</h2>
-            <input type="password" id="passwordInput" placeholder="Mot de passe" autofocus>
+            <input type="email" id="emailInput" placeholder="Email" autocomplete="email">
+            <input type="password" id="passwordInput" placeholder="Mot de passe" autocomplete="current-password">
             <button class="primary" onclick="login()">Se connecter</button>
             <button class="danger" onclick="closeLoginModal()">Annuler</button>
-            <p class="error-msg" id="errorMsg">Mot de passe incorrect !</p>
+            <p class="error-msg" id="errorMsg">Email ou mot de passe incorrect !</p>
         </div>
     </div>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
     <script>
         // ========================================
         // 🔧 CONFIGURATION
         // ========================================
         
-        const ADMIN_PASSWORD = "tartine0107";
-        
         const FIREBASE_CONFIG = {
-            apiKey: "AIzaSyBVEQ6M0ukJkJ-fKEkSq-Xx9Fupi3xcKgQ",
-            authDomain: "stream-heylynn.firebaseapp.com",
-            databaseURL: "https://stream-heylynn-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "stream-heylynn",
-            storageBucket: "stream-heylynn.firebasestorage.app",
-            messagingSenderId: "758596516880",
-            appId: "1:758596516880:web:009e187c55893ba5b81e95"
+            apiKey: "AIzaSyATD_0_kGqHC8sr8HWO4UCXVrQvfxGntJU",
+            authDomain: "heylynn-stream-vote.firebaseapp.com",
+            databaseURL: "https://heylynn-stream-vote-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "heylynn-stream-vote",
+            storageBucket: "heylynn-stream-vote.firebasestorage.app",
+            messagingSenderId: "311416852552",
+            appId: "1:311416852552:web:b2244d0674fc849fb0087d"
         };
 
+        const ADMIN_UID = "LpNRnn6nnjfPPTZDpZCFuWvNY9i2";
         const RATE_LIMIT_MS = 500;
 
         // ========================================
@@ -820,7 +821,9 @@
         }
 
         let db = null;
+        let auth = null;
         let isAdminMode = false;
+        let currentUser = null;
         let streamerAvailability = new Set();
         let myVotes = new Set();
         let allVotes = {};
@@ -846,12 +849,19 @@
                 firebase.initializeApp(FIREBASE_CONFIG);
             }
             db = firebase.database();
+            auth = firebase.auth();
             userId = getUserId();
             
-            const savedAdmin = sessionStorage.getItem('isAdmin');
-            if (savedAdmin === 'true') {
-                switchToAdminMode();
-            }
+            // Écouter les changements d'auth
+            auth.onAuthStateChanged((user) => {
+                currentUser = user;
+                if (user && user.uid === ADMIN_UID) {
+                    switchToAdminMode();
+                } else {
+                    // Mode viewer
+                    isAdminMode = false;
+                }
+            });
             
             loadData();
         }
@@ -895,30 +905,41 @@
         
         function showLoginModal() {
             document.getElementById('loginModal').style.display = 'block';
-            document.getElementById('passwordInput').focus();
+            document.getElementById('emailInput').focus();
         }
 
         function closeLoginModal() {
             document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('emailInput').value = '';
             document.getElementById('passwordInput').value = '';
             document.getElementById('errorMsg').style.display = 'none';
         }
 
         function login() {
+            const email = document.getElementById('emailInput').value;
             const password = document.getElementById('passwordInput').value;
-            if (password === ADMIN_PASSWORD) {
-                sessionStorage.setItem('isAdmin', 'true');
-                switchToAdminMode();
-                closeLoginModal();
-            } else {
-                document.getElementById('errorMsg').style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-            }
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    if (userCredential.user.uid === ADMIN_UID) {
+                        closeLoginModal();
+                    } else {
+                        document.getElementById('errorMsg').textContent = 'Vous n\'êtes pas autorisé !';
+                        document.getElementById('errorMsg').style.display = 'block';
+                        auth.signOut();
+                    }
+                })
+                .catch((error) => {
+                    document.getElementById('errorMsg').textContent = 'Email ou mot de passe incorrect !';
+                    document.getElementById('errorMsg').style.display = 'block';
+                    console.error('Login error:', error);
+                });
         }
 
         function logout() {
-            sessionStorage.removeItem('isAdmin');
-            location.reload();
+            auth.signOut().then(() => {
+                location.reload();
+            });
         }
 
         function switchToAdminMode() {
@@ -945,6 +966,12 @@
             const passwordInput = document.getElementById('passwordInput');
             if (passwordInput) {
                 passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') login();
+                });
+            }
+            const emailInput = document.getElementById('emailInput');
+            if (emailInput) {
+                emailInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') login();
                 });
             }
@@ -1036,6 +1063,11 @@
         // ========================================
         
         function toggleAvailability(slotId) {
+            if (!currentUser || currentUser.uid !== ADMIN_UID) {
+                alert('Action non autorisée');
+                return;
+            }
+            
             if (streamerAvailability.has(slotId)) {
                 streamerAvailability.delete(slotId);
             } else {
@@ -1053,7 +1085,7 @@
             if (countEl) countEl.textContent = voters.length;
 
             if (voters.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 20px;">Aucun votant</p>';
+                container.innerHTML = '<p style="text-align: center; color: var(--text-medium); padding: 20px;">Aucun votant</p>';
                 return;
             }
 
@@ -1071,6 +1103,11 @@
         }
 
         function resetVotesOnly() {
+            if (!currentUser || currentUser.uid !== ADMIN_UID) {
+                alert('Action non autorisée');
+                return;
+            }
+            
             if (confirm('⚠️ Réinitialiser SEULEMENT les votes ?')) {
                 db.ref('votes').remove();
                 db.ref('userVotes').remove();
@@ -1081,6 +1118,11 @@
         }
 
         function resetEverything() {
+            if (!currentUser || currentUser.uid !== ADMIN_UID) {
+                alert('Action non autorisée');
+                return;
+            }
+            
             if (confirm('⚠️ TOUT effacer (disponibilités + votes) ?')) {
                 db.ref('streamer/availability').remove();
                 db.ref('votes').remove();
@@ -1128,7 +1170,7 @@
             } else {
                 myVotes.add(slotId);
                 db.ref('votes/' + slotId).transaction((currentValue) => {
-                    return (currentValue || 0) + 1;
+                    return (currentValue || 0) + 1);
                 });
             }
 
@@ -1185,7 +1227,7 @@
                 .filter(slot => slot.votes > 0);
 
             if (sortedSlots.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 20px;">Aucun vote pour le moment</p>';
+                container.innerHTML = '<p style="text-align: center; color: var(--text-medium); padding: 20px;">Aucun vote pour le moment</p>';
                 return;
             }
 
