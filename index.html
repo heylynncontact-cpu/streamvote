@@ -1170,7 +1170,7 @@
             } else {
                 myVotes.add(slotId);
                 db.ref('votes/' + slotId).transaction((currentValue) => {
-                    return (currentValue || 0) + 1);
+                    return (currentValue || 0) + 1;
                 });
             }
 
