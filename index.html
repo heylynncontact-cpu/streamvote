@@ -633,37 +633,432 @@
             font-family: 'tchig-mono', monospace;
         }
 
+        /* ============================================ */
+        /* MOBILE RESPONSIVE - NAVIGATION PAR JOURS */
+        /* ============================================ */
         @media (max-width: 768px) {
+            body {
+                padding: 0;
+                background: var(--white);
+            }
+
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                padding: 20px;
+            }
+
             header h1 {
-                font-size: 1.7rem;
+                font-size: 1.4rem;
+            }
+
+            header p {
+                font-size: 0.85rem;
+            }
+
+            .logout-btn {
+                top: 16px;
+                right: 16px;
+                padding: 8px 12px;
+                font-size: 0.75rem;
             }
 
             .content {
-                padding: 24px 20px;
+                padding: 0;
+                padding-bottom: 100px;
             }
 
-            th, td {
-                font-size: 0.8rem;
-                padding: 10px 6px;
-                height: 44px;
+            .instructions {
+                display: none;
             }
 
+            .warning {
+                margin: 12px 16px;
+                padding: 12px;
+                border-radius: 12px;
+                font-size: 0.85rem;
+            }
+
+            .legend {
+                padding: 12px 16px;
+                gap: 12px;
+                background: var(--gray-light);
+                border-top: 1px solid var(--gray-medium);
+                border-bottom: 1px solid var(--gray-medium);
+                margin-bottom: 16px;
+            }
+
+            .legend-item {
+                font-size: 0.75rem;
+                gap: 6px;
+            }
+
+            .legend-box {
+                width: 24px;
+                height: 24px;
+                border-radius: 6px;
+            }
+
+            .stats {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                padding: 16px;
+                margin-bottom: 0;
+                background: var(--gray-light);
+            }
+
+            .stat-card {
+                padding: 16px 12px;
+                border-radius: 16px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            }
+
+            .stat-card h3 {
+                font-size: 1.8rem;
+                margin-bottom: 4px;
+            }
+
+            .stat-card p {
+                font-size: 0.6rem;
+                letter-spacing: 0.5px;
+            }
+
+            /* HIDE DESKTOP TABLE */
+            .schedule-grid {
+                display: none !important;
+            }
+
+            table {
+                display: none !important;
+            }
+
+            /* MOBILE DAY NAVIGATION */
+            .mobile-day-nav {
+                display: block;
+                background: white;
+                padding: 24px 16px 20px;
+                border-bottom: 2px solid var(--gray-light);
+            }
+
+            .day-nav-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                gap: 16px;
+                max-width: 100%;
+            }
+
+            .day-nav-header h2 {
+                font-family: 'tchig-mono', monospace;
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: var(--black);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                background: var(--blue);
+                padding: 14px 32px;
+                border-radius: 50px;
+                text-align: center;
+                flex: 1;
+                max-width: 240px;
+                margin: 0 auto;
+            }
+
+            .arrow-btn {
+                background: transparent;
+                border: none;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s;
+                flex-shrink: 0;
+            }
+
+            .arrow-btn svg {
+                width: 100%;
+                height: 100%;
+            }
+
+            .arrow-btn:active {
+                transform: scale(0.92);
+            }
+
+            .arrow-btn:disabled {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+
+            .day-dots {
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+            }
+
+            .day-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--gray-medium);
+                transition: all 0.3s;
+            }
+
+            .day-dot.active {
+                background: var(--blue);
+                width: 24px;
+                border-radius: 4px;
+            }
+
+            /* MOBILE TIME SLOTS */
+            .mobile-time-slots {
+                display: block;
+                padding: 16px;
+                min-height: 400px;
+            }
+
+            .time-slot-mobile {
+                background: white;
+                border: 2px solid var(--gray-medium);
+                border-radius: 16px;
+                padding: 16px;
+                margin-bottom: 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                min-height: 68px;
+                transition: all 0.2s;
+            }
+
+            .time-slot-mobile.unavailable {
+                background: #f8f9fa;
+                border-color: var(--gray-light);
+                opacity: 0.5;
+            }
+
+            .time-slot-mobile.available {
+                cursor: pointer;
+                border-color: var(--blue);
+            }
+
+            .time-slot-mobile.available:active {
+                transform: scale(0.98);
+            }
+
+            .time-slot-mobile.voted {
+                background: var(--lime) !important;
+                border-color: var(--lime) !important;
+                border-width: 3px !important;
+            }
+
+            .time-slot-mobile.voted .time-info-mobile h3 {
+                color: var(--black);
+            }
+
+            .time-slot-mobile.voted .time-info-mobile p {
+                color: var(--black);
+                font-weight: 600;
+            }
+
+            .time-info-mobile {
+                flex: 1;
+            }
+
+            .time-info-mobile h3 {
+                font-family: 'tchig-mono', monospace;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--black);
+                margin-bottom: 4px;
+            }
+
+            .time-info-mobile p {
+                font-family: 'fractul-variable', sans-serif;
+                font-size: 0.75rem;
+                color: var(--text-medium);
+            }
+
+            .slot-status-mobile {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .vote-indicator-mobile {
+                font-size: 1.8rem;
+                display: none;
+            }
+
+            .time-slot-mobile.voted .vote-indicator-mobile {
+                display: block;
+            }
+
+            .vote-count-badge-mobile {
+                background: var(--pink);
+                color: white;
+                padding: 6px 12px;
+                border-radius: 12px;
+                font-family: 'tchig-mono', monospace;
+                font-size: 0.85rem;
+                font-weight: 700;
+            }
+
+            /* RESULTS MOBILE */
+            .results {
+                padding: 16px;
+                background: var(--gray-light);
+                margin-top: 16px;
+            }
+
+            .results h2 {
+                font-size: 1.1rem;
+                margin-bottom: 16px;
+            }
+
+            .result-item {
+                padding: 16px;
+                border-radius: 16px;
+                margin-bottom: 12px;
+            }
+
+            .result-info h3 {
+                font-size: 1rem;
+                margin-bottom: 4px;
+            }
+
+            .result-info p {
+                font-size: 0.75rem;
+            }
+
+            .vote-badge {
+                padding: 8px 14px;
+                border-radius: 16px;
+                font-size: 0.9rem;
+            }
+
+            /* ACTIONS BOTTOM FIXED */
             .actions {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 12px 16px;
+                background: white;
+                border-top: 1px solid var(--gray-light);
+                box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+                z-index: 50;
                 flex-direction: column;
             }
 
             button {
                 width: 100%;
+                padding: 16px;
+                border-radius: 16px;
+                font-size: 0.95rem;
+                margin-bottom: 8px;
             }
 
-            .admin-link {
-                position: static;
-                display: block;
+            /* VOTERS LIST MOBILE */
+            .voters-list {
+                padding: 16px;
+                background: var(--gray-light);
                 margin-top: 16px;
             }
 
-            .stat-card h3 {
-                font-size: 2rem;
+            .voters-list h2 {
+                font-size: 1.1rem;
+                margin-bottom: 16px;
+            }
+
+            .voter-item {
+                padding: 12px 16px;
+                border-radius: 12px;
+                margin-bottom: 8px;
+            }
+
+            .voter-id {
+                font-size: 0.75rem;
+            }
+
+            .voter-count {
+                padding: 4px 10px;
+                border-radius: 10px;
+                font-size: 0.75rem;
+            }
+
+            /* MODAL MOBILE */
+            .modal-content {
+                border-radius: 32px 32px 0 0;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                padding: 32px 24px;
+                animation: slideUp 0.3s ease;
+            }
+
+            @keyframes slideUp {
+                from { transform: translateY(100%); }
+                to { transform: translateY(0); }
+            }
+
+            .modal-content h2 {
+                font-size: 1.4rem;
+                margin-bottom: 20px;
+            }
+
+            .modal-content input {
+                padding: 16px;
+                border-radius: 16px;
+                font-size: 1rem;
+                margin-bottom: 16px;
+            }
+
+            .error-msg {
+                padding: 12px;
+                border-radius: 12px;
+                font-size: 0.85rem;
+                margin-top: 12px;
+            }
+
+            /* FOOTER MOBILE */
+            .footer {
+                padding: 20px;
+                font-size: 0.8rem;
+                background: var(--gray-light);
+            }
+
+            .admin-link {
+                display: inline-block;
+                margin-top: 12px;
+                padding: 8px 16px;
+                background: var(--white);
+                border-radius: 12px;
+                font-size: 0.75rem;
+            }
+
+            .no-availability {
+                padding: 60px 20px;
+            }
+
+            .no-availability h2 {
+                font-size: 1.4rem;
+                margin-bottom: 12px;
+            }
+
+            .no-availability p {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
             }
         }
     </style>
@@ -728,6 +1123,7 @@
                 </div>
             </div>
 
+            <!-- DESKTOP: Table -->
             <div class="schedule-grid">
                 <table id="scheduleTable">
                     <thead>
@@ -745,6 +1141,26 @@
                     <tbody id="scheduleBody"></tbody>
                 </table>
             </div>
+
+            <!-- MOBILE: Day Navigation + Time Slots -->
+            <div class="mobile-day-nav" style="display: none;">
+                <div class="day-nav-header">
+                    <button class="arrow-btn" id="prevDayBtn" onclick="prevDay()">
+                        <svg width="24" height="24" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.45 20.5L25.1125 13.8375C25.7729 13.1771 25.7729 12.1063 25.1125 11.4458C24.452 10.7854 23.3812 10.7854 22.7208 11.4458L13.6666 20.5L22.7208 29.5542C23.3812 30.2146 24.452 30.2146 25.1125 29.5542C25.7729 28.8937 25.7729 27.8229 25.1125 27.1625L18.45 20.5Z" fill="black"/>
+                        </svg>
+                    </button>
+                    <h2 id="currentDayTitle">Lundi</h2>
+                    <button class="arrow-btn" id="nextDayBtn" onclick="nextDay()">
+                        <svg width="24" height="24" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1);">
+                            <path d="M18.45 20.5L25.1125 13.8375C25.7729 13.1771 25.7729 12.1063 25.1125 11.4458C24.452 10.7854 23.3812 10.7854 22.7208 11.4458L13.6666 20.5L22.7208 29.5542C23.3812 30.2146 24.452 30.2146 25.1125 29.5542C25.7729 28.8937 25.7729 27.8229 25.1125 27.1625L18.45 20.5Z" fill="black"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="day-dots" id="dayDots"></div>
+            </div>
+
+            <div class="mobile-time-slots" id="mobileTimeSlots" style="display: none;"></div>
 
             <div class="results">
                 <h2 id="resultsTitle">Top horaires les plus votés</h2>
@@ -830,6 +1246,7 @@
         let allUserVotes = {};
         let userId = null;
         let lastVoteTime = 0;
+        let currentMobileDay = 0; // Index du jour actuel en mobile (0 = lundi)
 
         // ========================================
         // Init
@@ -1079,6 +1496,11 @@
                 streamerAvailability.add(slotId);
             }
             db.ref('streamer/availability').set([...streamerAvailability]);
+            
+            // Refresh mobile slots
+            if (window.innerWidth <= 768) {
+                setTimeout(generateMobileTimeSlots, 100);
+            }
         }
 
         function displayVoters() {
@@ -1180,6 +1602,11 @@
             }
 
             db.ref('userVotes/' + userId).set([...myVotes]);
+            
+            // Refresh mobile slots
+            if (window.innerWidth <= 768) {
+                setTimeout(generateMobileTimeSlots, 100);
+            }
         }
 
         function resetMyVotes() {
@@ -1303,6 +1730,158 @@
                 }
             }
         }
+
+        // ========================================
+        // NAVIGATION MOBILE
+        // ========================================
+        
+        function initMobileNav() {
+            // Détecter si on est en mobile
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // Afficher la navigation mobile
+                const mobileNav = document.querySelector('.mobile-day-nav');
+                const mobileSlots = document.getElementById('mobileTimeSlots');
+                if (mobileNav) mobileNav.style.display = 'block';
+                if (mobileSlots) mobileSlots.style.display = 'block';
+                
+                // Générer les dots
+                generateDayDots();
+                // Générer les time slots pour le jour actuel
+                generateMobileTimeSlots();
+                // Update les boutons
+                updateDayButtons();
+            }
+        }
+
+        function generateDayDots() {
+            const container = document.getElementById('dayDots');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            days.forEach((day, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'day-dot';
+                if (index === currentMobileDay) dot.classList.add('active');
+                dot.onclick = () => goToDay(index);
+                container.appendChild(dot);
+            });
+        }
+
+        function generateMobileTimeSlots() {
+            const container = document.getElementById('mobileTimeSlots');
+            if (!container) return;
+            
+            const currentDay = days[currentMobileDay];
+            container.innerHTML = '';
+            
+            // Update le titre
+            const titleEl = document.getElementById('currentDayTitle');
+            if (titleEl) {
+                titleEl.textContent = currentDay.charAt(0).toUpperCase() + currentDay.slice(1);
+            }
+            
+            hours.forEach(hour => {
+                const slotId = `${currentDay}-${hour}`;
+                const isAvailable = streamerAvailability.has(slotId);
+                const isVoted = myVotes.has(slotId);
+                const voteCount = allVotes[slotId] || 0;
+                
+                const card = document.createElement('div');
+                card.className = 'time-slot-mobile';
+                
+                if (!isAvailable) {
+                    card.classList.add('unavailable');
+                } else {
+                    card.classList.add('available');
+                    if (isVoted) {
+                        card.classList.add('voted');
+                    }
+                    card.onclick = () => {
+                        if (isAdminMode) {
+                            toggleAvailability(slotId);
+                        } else {
+                            toggleVote(slotId);
+                        }
+                    };
+                }
+                
+                card.innerHTML = `
+                    <div class="time-info-mobile">
+                        <h3>${hour}</h3>
+                        <p>${isAvailable ? (isVoted ? 'Tu as voté' : 'Disponible') : 'Indisponible'}</p>
+                    </div>
+                    <div class="slot-status-mobile">
+                        ${voteCount > 0 ? `<div class="vote-count-badge-mobile">${voteCount}</div>` : ''}
+                        <div class="vote-indicator-mobile">✅</div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function prevDay() {
+            if (currentMobileDay > 0) {
+                currentMobileDay--;
+                generateDayDots();
+                generateMobileTimeSlots();
+                updateDayButtons();
+            }
+        }
+
+        function nextDay() {
+            if (currentMobileDay < days.length - 1) {
+                currentMobileDay++;
+                generateDayDots();
+                generateMobileTimeSlots();
+                updateDayButtons();
+            }
+        }
+
+        function goToDay(index) {
+            currentMobileDay = index;
+            generateDayDots();
+            generateMobileTimeSlots();
+            updateDayButtons();
+        }
+
+        function updateDayButtons() {
+            const prevBtn = document.getElementById('prevDayBtn');
+            const nextBtn = document.getElementById('nextDayBtn');
+            
+            if (prevBtn) prevBtn.disabled = currentMobileDay === 0;
+            if (nextBtn) nextBtn.disabled = currentMobileDay === days.length - 1;
+        }
+
+        // Réinitialiser la navigation mobile quand les données changent
+        const originalLoadData = loadData;
+        loadData = function() {
+            originalLoadData();
+            setTimeout(initMobileNav, 100);
+        };
+
+        // Réinitialiser lors du resize
+        window.addEventListener('resize', () => {
+            const isMobile = window.innerWidth <= 768;
+            const mobileNav = document.querySelector('.mobile-day-nav');
+            const mobileSlots = document.getElementById('mobileTimeSlots');
+            
+            if (isMobile) {
+                if (mobileNav) mobileNav.style.display = 'block';
+                if (mobileSlots) mobileSlots.style.display = 'block';
+                initMobileNav();
+            } else {
+                if (mobileNav) mobileNav.style.display = 'none';
+                if (mobileSlots) mobileSlots.style.display = 'none';
+            }
+        });
+
+        // Init mobile au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(initMobileNav, 500);
+        });
     </script>
 </body>
 </html>
