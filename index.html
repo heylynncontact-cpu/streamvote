@@ -838,7 +838,7 @@
         function getUserId() {
             let id = localStorage.getItem('voterId');
             if (!id) {
-                id = 'viewer_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+                id = 'voter_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
                 localStorage.setItem('voterId', id);
             }
             return id;
