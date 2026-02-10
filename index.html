@@ -751,7 +751,8 @@
             .day-nav-header {
                 display: flex;
                 align-items: center;
-                gap: 8px;
+                justify-content: center;
+                gap: 20px;
                 margin-bottom: 20px;
             }
 
@@ -763,30 +764,34 @@
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 background: var(--blue);
-                padding: 14px 24px;
+                padding: 14px 32px;
                 border-radius: 50px;
                 text-align: center;
-                flex: 1;
+                flex: 0 1 auto;
+                max-width: 160px;
                 margin: 0;
             }
 
             .arrow-btn {
                 background: transparent;
                 border: none;
-                width: 40px;
-                height: 40px;
                 padding: 0;
                 cursor: pointer;
-                display: flex;
+                display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 transition: all 0.2s;
                 flex-shrink: 0;
+                max-width: 16px;
+                min-width: 16px;
+                width: 16px;
+                overflow: hidden;
             }
 
             .arrow-btn svg {
-                width: 100%;
-                height: 100%;
+                display: block;
+                width: 16px;
+                height: 24px;
             }
 
             .arrow-btn:active {
@@ -823,6 +828,10 @@
                 display: block;
                 padding: 16px;
                 min-height: 400px;
+            }
+
+            .mobile-reset-container {
+                display: block !important;
             }
 
             .time-slot-mobile {
@@ -1149,13 +1158,13 @@
             <div class="mobile-day-nav" style="display: none;">
                 <div class="day-nav-header">
                     <button class="arrow-btn" id="prevDayBtn" onclick="prevDay()">
-                        <svg width="24" height="24" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="16" height="24" viewBox="10 0 21 41" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
                             <path d="M18.45 20.5L25.1125 13.8375C25.7729 13.1771 25.7729 12.1063 25.1125 11.4458C24.452 10.7854 23.3812 10.7854 22.7208 11.4458L13.6666 20.5L22.7208 29.5542C23.3812 30.2146 24.452 30.2146 25.1125 29.5542C25.7729 28.8937 25.7729 27.8229 25.1125 27.1625L18.45 20.5Z" fill="black"/>
                         </svg>
                     </button>
                     <h2 id="currentDayTitle">Lundi</h2>
                     <button class="arrow-btn" id="nextDayBtn" onclick="nextDay()">
-                        <svg width="24" height="24" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1);">
+                        <svg width="16" height="24" viewBox="10 0 21 41" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1);" preserveAspectRatio="xMidYMid meet">
                             <path d="M18.45 20.5L25.1125 13.8375C25.7729 13.1771 25.7729 12.1063 25.1125 11.4458C24.452 10.7854 23.3812 10.7854 22.7208 11.4458L13.6666 20.5L22.7208 29.5542C23.3812 30.2146 24.452 30.2146 25.1125 29.5542C25.7729 28.8937 25.7729 27.8229 25.1125 27.1625L18.45 20.5Z" fill="black"/>
                         </svg>
                     </button>
@@ -1164,6 +1173,13 @@
             </div>
 
             <div class="mobile-time-slots" id="mobileTimeSlots" style="display: none;"></div>
+
+            <!-- Bouton reset votes mobile (inline, pas fixed) -->
+            <div style="padding: 16px; display: none;" class="mobile-reset-container viewer-section">
+                <button style="width: 100%; padding: 14px; border: none; border-radius: 16px; background: var(--pink); color: var(--black); font-family: 'tchig-mono', monospace; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; cursor: pointer;" onclick="resetMyVotes()">
+                    Réinitialiser mes votes
+                </button>
+            </div>
 
             <div class="results">
                 <h2 id="resultsTitle">Top horaires les plus votés</h2>
@@ -1178,7 +1194,7 @@
 
             <!-- Actions Viewer -->
             <div class="actions viewer-section">
-                <button class="danger" onclick="resetMyVotes()">Réinitialiser mes votes</button>
+                <button class="primary" id="nextDayFixedBtn" onclick="goToNextDay()">JOUR SUIVANT →</button>
             </div>
 
             <!-- Actions Admin -->
@@ -1853,9 +1869,43 @@
         function updateDayButtons() {
             const prevBtn = document.getElementById('prevDayBtn');
             const nextBtn = document.getElementById('nextDayBtn');
+            const nextDayFixedBtn = document.getElementById('nextDayFixedBtn');
             
             if (prevBtn) prevBtn.disabled = currentMobileDay === 0;
             if (nextBtn) nextBtn.disabled = currentMobileDay === days.length - 1;
+            
+            // Changer le texte du bouton fixed selon le jour
+            if (nextDayFixedBtn) {
+                if (currentMobileDay === days.length - 1) {
+                    // On est sur dimanche, bouton devient "Revenir à lundi"
+                    nextDayFixedBtn.textContent = '← REVENIR À LUNDI';
+                    nextDayFixedBtn.style.display = 'block';
+                } else {
+                    // Jour normal, bouton "Jour suivant"
+                    nextDayFixedBtn.textContent = 'JOUR SUIVANT →';
+                    nextDayFixedBtn.style.display = 'block';
+                }
+            }
+        }
+
+        function goToNextDay() {
+            if (currentMobileDay === days.length - 1) {
+                // On est sur dimanche, retour à lundi
+                currentMobileDay = 0;
+            } else {
+                // Jour normal, suivant
+                currentMobileDay++;
+            }
+            
+            generateDayDots();
+            generateMobileTimeSlots();
+            updateDayButtons();
+            
+            // Scroll au début de la navigation des jours
+            const dayNav = document.querySelector('.mobile-day-nav');
+            if (dayNav) {
+                dayNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         // Réinitialiser la navigation mobile quand les données changent
